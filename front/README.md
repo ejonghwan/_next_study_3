@@ -12,13 +12,13 @@
 
 4. 이미지는 png도 import 할 수 있다. 이미지 최적화는 Image 컴포를 쓰자 
  <Image
-   className={styles.logo}
-   src="https://nextjs.org/icons/next.svg"
-   alt="Next.js logo"
-   width={180}
-   height={38}
-   priority
-/>
+          className={styles.logo}
+          src="https://nextjs.org/icons/next.svg"
+          alt="Next.js logo"
+          width={180}
+          height={38}
+          priority
+        />
 
 
 5. 패럴레 라우트 = children 말고 layout에 다른 라우팅 추가 (라우팅이 변경되어도 뒤에 어떤 페이지를 띄운 상태로 다른 라우팅을 띄우는 방법...)
@@ -43,7 +43,7 @@ ex) 아래같은 경우 link나 router로 왔을 땐 아래 라우팅이 보여�
 
 
 
-7. 클라이언트 컴포넌트("use client")도 서버에서 렌더링 됩니다. 헷갈리시면 안 돼요. 그래서 SSR도 됨
+7. 클라이언트 컴포넌트("use client")도 서버에서 렌더링 됩니다. 헷갈리시면 안 돼요. 그래서 SSR도 됩니다.
 
 
 
@@ -102,5 +102,38 @@ router.replace('/login')
 
 
 
+14. dvh 디바이스 검색창 고려한 vh vw 단위.
 
+
+
+15. route구분해서 네비액티브는 server-side에서 안됨
+
+아래 두개의 segment를 받아서 처리
+import { useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation'
+   const segment = useSelectedLayoutSegment();
+   const segments = useSelectedLayoutSegments();
+
+   // segment : layout 기준으로 첫번째 폴더
+   // ex) 아래의 경우 두번째 루트에 들어가도 세그먼트는 test1, test2를 반환
+   // test1/innertest1
+   // test2/innertest2
+   // layout.tsx 
+   
+   // segments : layout 기준으로 모든 폴더  
+    // ex) 아래의 경우 해당 루트에 들어가면 세그먼츠는 test1/inntertest1, test2/innertest2를 모두 반환
+   // test1/innertest1
+   // test2/innertest2
+   // layout.tsx 
+
+
+
+16. jsx에 onClick이 있으면 client 컴포넌트라고 보면 됨 
+- 서버액션이 실험적이라 아직까지는 이벤트 리스너들은 클라이언트 컴포에서 처리
+
+
+
+
+17. svg 복사하는법 
+-개발자도구 엘리먼츠탭에서 svg 선택 
+- 우클릭 후 복사 > outerHTML 복사
 
