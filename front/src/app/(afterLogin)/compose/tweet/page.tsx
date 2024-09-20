@@ -1,9 +1,10 @@
-import React from 'react'
+import Home from "@/app/(afterLogin)/home/page";
 
-const page = () => {
+export default function Page() {
   return (
-    <div>page</div>
+    <div>
+      컴포즈/트윗
+      <Home />
+    </div>
   )
 }
-
-export default page

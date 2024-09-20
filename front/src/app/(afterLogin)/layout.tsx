@@ -1,11 +1,22 @@
 import React from 'react'
 import Link from 'next/link'
 import Nav from '@/app/(afterLogin)/_component/Nav'
+import TrendSection from '@/app/(afterLogin)/_component/TrendSection'
+import FollowRecommend from '@/app/(afterLogin)/_component/FollowRecommend'
 import LogoutButton from '@/app/(afterLogin)/_component/LogoutButton'
 
-const AfterLoginLayout = ({ children }: { children: React.ReactNode }) => {
+const AfterLoginLayout = ({ children, dk }: { children: React.ReactNode; dk: React.ReactNode }) => {
   return (
     <div style={{ display: 'flex' }}>
+
+    
+{/* <div style={{ border: '1px solid red'}} > */}
+        inter
+        ?????????????????
+        {dk}
+      {/* </div> */}
+
+
       <header style={{ width: '300px', border: '1px solid #666' }}>
         <h1>
           <Link href="/">logo</Link>
@@ -13,15 +24,28 @@ const AfterLoginLayout = ({ children }: { children: React.ReactNode }) => {
         <Nav />
         <div>
           <Link href={'/compose/tweet'}>게시하기</Link>
+          <Link href={'/dkdk'}>dkdk</Link>
         </div>
         <div>
           <LogoutButton />
         </div>
       </header>
 
-      <main>
+      <main style={{ border: "1px solid red" }}>
         {children}
       </main>
+
+      <div style={{ border: "1px solid blue" }}>
+        <form>
+          <input type="search" />
+        </form>
+        <TrendSection />
+        <div>
+          <h3>팔로우 추천</h3>
+          <FollowRecommend user={{nickname: 'hoho', id: 'zzz'}} />
+          
+        </div>
+      </div>
 
     </div>
   )
