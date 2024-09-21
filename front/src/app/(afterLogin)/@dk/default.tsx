@@ -1,9 +1,13 @@
-import React from 'react'
+const Default = () => null 
 
-const page = () => {
-  return (
-    <div>page zzzzzzzzzzzzzzzzz</div>
-  )
-}
+export default Default;
 
-export default page
+// import React from 'react'
+
+// const page = () => {
+//   return (
+//     <div>page zzzzzzzzzzzzzzzzz</div>
+//   )
+// }
+
+// export default page

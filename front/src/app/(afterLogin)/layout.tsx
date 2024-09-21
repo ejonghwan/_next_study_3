@@ -5,17 +5,21 @@ import TrendSection from '@/app/(afterLogin)/_component/TrendSection'
 import FollowRecommend from '@/app/(afterLogin)/_component/FollowRecommend'
 import LogoutButton from '@/app/(afterLogin)/_component/LogoutButton'
 
-const AfterLoginLayout = ({ children, dk}: { children: React.ReactNode, dk: React.ReactNode}) => {
+const AfterLoginLayout = ({ children, dk, ho }: { children: React.ReactNode, dk: React.ReactNode,  ho: React.ReactNode}) => {
   return (
     <div style={{ display: 'flex' }}>
 
     
-{/* <div style={{ border: '1px solid red'}} > */}
-        inter
-        ?????????????????
-        {dk}
-      {/* </div> */}
+      <div style={{ border: '1px solid red'}} >
+        inter dk
+        <div>{dk}</div>
+      </div>
 
+
+      <div style={{ border: '1px solid red'}} >
+        inter ho
+        <div>{ho}</div>
+      </div>
 
       <header style={{ width: '300px', border: '1px solid #666' }}>
         <h1>
@@ -25,6 +29,7 @@ const AfterLoginLayout = ({ children, dk}: { children: React.ReactNode, dk: Reac
         <div>
           <Link href={'/compose/tweet'}>게시하기</Link>
           <Link href={'/dkdk'}>dkdk</Link>
+          <Link href={'/hoho'}>hoho</Link>
         </div>
         <div>
           <LogoutButton />

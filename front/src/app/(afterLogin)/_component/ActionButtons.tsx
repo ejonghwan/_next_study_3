@@ -14,7 +14,7 @@ export default function ActionButtons({ white }: Props) {
   const onClickRepost = () => {}
   const onClickHeart = () => {}
 
-  console.log('white?', white)
+  // console.log('white?', white)
 
   return (
     <div >
