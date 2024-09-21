@@ -6,6 +6,7 @@ const MainPage = () => {
   return (
     <>
       <h2>BeforeLogin page</h2>
+        <Link href={'/home'}>home</Link>
         <div>
           <Image
             // className={styles.logo}

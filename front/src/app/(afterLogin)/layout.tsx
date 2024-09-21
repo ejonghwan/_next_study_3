@@ -5,7 +5,7 @@ import TrendSection from '@/app/(afterLogin)/_component/TrendSection'
 import FollowRecommend from '@/app/(afterLogin)/_component/FollowRecommend'
 import LogoutButton from '@/app/(afterLogin)/_component/LogoutButton'
 
-const AfterLoginLayout = ({ children, dk }: { children: React.ReactNode; dk: React.ReactNode }) => {
+const AfterLoginLayout = ({ children, dk}: { children: React.ReactNode, dk: React.ReactNode}) => {
   return (
     <div style={{ display: 'flex' }}>
 
