@@ -25,8 +25,7 @@ const MainPage = () => {
 
         <div>
           <h2>인터셉팅</h2>
-          <Link href="/itest">인터셉팅 테스트</Link>
-          <Link href="/dkwlsWK">인터셉팅 테스트</Link>
+          <Link href="/itest">itest 인터셉팅 테스트</Link>
         </div>
     </>
   )

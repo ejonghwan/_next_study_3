@@ -126,6 +126,18 @@ import { useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/naviga
    // layout.tsx 
 
 
+15-1. route 구분 하는 또 한가지. 
+- localhost:3000/ 여기부터 ? 쿼리스트링 앞까지 모두 반환
+- client side에서만 작동
+
+import { usePathname } from 'next/navigation'
+const pathname = usePathname(); 
+
+특정 컴포넌트 안쪽에 
+if(pathname === '특정라우터명') return null 해주면 아래는 렌더링안함
+
+
+
 
 16. jsx에 onClick이 있으면 client 컴포넌트라고 보면 됨 
 - 서버액션이 실험적이라 아직까지는 이벤트 리스너들은 클라이언트 컴포에서 처리
@@ -137,3 +149,15 @@ import { useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/naviga
 -개발자도구 엘리먼츠탭에서 svg 선택 
 - 우클릭 후 복사 > outerHTML 복사
 
+
+
+18. contextapi 최적화 ? 한번 알아보기
+
+
+
+
+19. 페러렐 라우터 + 인터셉팅 라우터 버그 정리 
+
+
+
+20.

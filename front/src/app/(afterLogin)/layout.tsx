@@ -4,8 +4,9 @@ import Nav from '@/app/(afterLogin)/_component/Nav'
 import TrendSection from '@/app/(afterLogin)/_component/TrendSection'
 import FollowRecommend from '@/app/(afterLogin)/_component/FollowRecommend'
 import LogoutButton from '@/app/(afterLogin)/_component/LogoutButton'
+import RightSearchZone from '@/app/(afterLogin)/_component/RightSearchZone'
 
-const AfterLoginLayout = ({ children, dk, ho }: { children: React.ReactNode, dk: React.ReactNode,  ho: React.ReactNode}) => {
+const AfterLoginLayout = ({ children, dk, ho, modal }: { children: React.ReactNode, modal: React.ReactNode, dk: React.ReactNode,  ho: React.ReactNode}) => {
   return (
     <div style={{ display: 'flex' }}>
 
@@ -19,6 +20,11 @@ const AfterLoginLayout = ({ children, dk, ho }: { children: React.ReactNode, dk:
       <div style={{ border: '1px solid red'}} >
         inter ho
         <div>{ho}</div>
+      </div>
+
+      <div style={{ border: '1px solid red'}} >
+        inter modal
+        <div>{modal}</div>
       </div>
 
       <header style={{ width: '300px', border: '1px solid #666' }}>
@@ -41,9 +47,7 @@ const AfterLoginLayout = ({ children, dk, ho }: { children: React.ReactNode, dk:
       </main>
 
       <div style={{ border: "1px solid blue" }}>
-        <form>
-          <input type="search" />
-        </form>
+        <RightSearchZone />
         <TrendSection />
         <div>
           <h3>팔로우 추천</h3>
