@@ -137,6 +137,12 @@ const pathname = usePathname();
 if(pathname === '특정라우터명') return null 해주면 아래는 렌더링안함
 
 
+15-2 searchParams 받아오는법 
+  const searchParams = useSearchParams();
+ router.replace(`/search?q=${searchParams.get('q')}`)
+   router.replace(`/search?${searchParams.toString()}&f=live`)  -> 지금 있는거 다  쓰고 뒤에 추가
+
+
 
 
 16. jsx에 onClick이 있으면 client 컴포넌트라고 보면 됨 
@@ -160,4 +166,27 @@ if(pathname === '특정라우터명') return null 해주면 아래는 렌더링�
 
 
 
-20.
+20. 부모는 client side인데 자식은 server side 일 때 children 활용 
+호출하는 페이지는 server-side
+Client 컴포넌트는 "use client"
+<Client prop={prop}>
+   <div>이 파일 자체는 server side </div>
+</Client>
+
+주의) 클라컴포에서 서버 컴포 import하면 서버컴포 성격이 변경됨. 위처럼 사용해야
+
+
+
+
+
+21. 클릭되는 영역과 그 안에 a 태그가 있을 경우 캡쳐링 사용
+<li  onClickCapture={clikcevt}>
+  <a href={}> 
+위의 경우 저 이벤트 사용하면 캡쳐링 방지 
+
+
+
+
+
+22. 이미 import 되고 있는 export const 컴포넌트들 import 경로까지 자동으로 변경해주는 기능 
+해당 코드 우클릭 > Refactor... > move
