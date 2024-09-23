@@ -1,4 +1,4 @@
-
+import style from './profile.module.css';
 import Post from "@/app/(afterLogin)/_component/Post";
 import BackButton from "@/app/(afterLogin)/_component/BackButton";
 export default function Profile() {
@@ -9,20 +9,20 @@ export default function Profile() {
   };
 
   return (
-    <main>
-      <div >
+    <main className={style.main}>
+      <div className={style.header}>
         <BackButton />
-        <h3>{user.nickname}</h3>
+        <h3 className={style.headerTitle}>{user.nickname}</h3>
       </div>
-      <div >
-        <div>
+      <div className={style.userZone}>
+        <div className={style.userImage}>
           <img src={user.image} alt={user.id}/>
         </div>
-        <div>
+        <div className={style.userName}>
           <div>{user.nickname}</div>
           <div>@{user.id}</div>
         </div>
-        <button >팔로우</button>
+        <button className={style.followButton}>팔로우</button>
       </div>
       <div>
         <Post />

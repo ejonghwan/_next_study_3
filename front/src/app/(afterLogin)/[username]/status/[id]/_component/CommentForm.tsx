@@ -1,6 +1,7 @@
 "use client";
 
 import {useRef, useState} from "react";
+import style from './commentForm.module.css';
 
 export default function CommentForm() {
   const [content, setContent] = useState('');
@@ -14,19 +15,19 @@ export default function CommentForm() {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <div >
+    <form className={style.postForm} onSubmit={onSubmit}>
+      <div className={style.postUserSection}>
+        <div className={style.postUserImage}>
           <img src={me.image} alt={me.id}/>
         </div>
       </div>
-      <div >
+      <div className={style.postInputSection}>
         <textarea value={content} onChange={onChange} placeholder="답글 게시하기"/>
-        <div >
-          <div >
-            <div >
+        <div className={style.postButtonSection}>
+          <div className={style.footerButtons}>
+            <div className={style.footerButtonLeft}>
               <input type="file" name="imageFiles" multiple hidden ref={imageRef}/>
-              <button type="button" onClick={onClickButton}>
+              <button className={style.uploadButton} type="button" onClick={onClickButton}>
                 <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
                   <g>
                     <path
@@ -35,7 +36,7 @@ export default function CommentForm() {
                 </svg>
               </button>
             </div>
-            <button disabled={!content}>답글</button>
+            <button className={style.actionButton} disabled={!content}>답글</button>
           </div>
         </div>
       </div>
