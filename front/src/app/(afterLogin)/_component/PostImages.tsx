@@ -28,9 +28,9 @@ console.log(post.Images.length)
     return (
       <Link
         href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
-        style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'contain', width: '500px', height: '500px'}}
+        style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'contain', width: '200px', height: '200px', display: "block"}}
       >
-        <img src={post.Images[0]?.link} alt="" style={{  width: '500px', height: '500px' }}/>
+        <img src={post.Images[0]?.link} alt="" style={{  width: '200px', height: '200px', display: "block" }}/>
         
       </Link>
     )
@@ -41,11 +41,11 @@ console.log(post.Images.length)
       <div>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[1].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         
       </div>
@@ -56,16 +56,16 @@ console.log(post.Images.length)
       <div>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <div>
           <Link
             href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[1].imageId}`}
-            style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover'}}>
+            style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
           </Link>
           <Link
             href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[2].imageId}`}
-            style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover'}}>
+            style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
           </Link>
         </div>
         
@@ -77,19 +77,19 @@ console.log(post.Images.length)
       <div>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[1].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[2].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[3].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[3]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[3]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
       </div>
       
@@ -101,23 +101,23 @@ console.log(post.Images.length)
       <div className="hoho">
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[0]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[1].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[1]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[2].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[2]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[3].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[3]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[3]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[4].imageId}`}
-          style={{ backgroundImage: `url(${post.Images[4]?.link})`, backgroundSize: 'cover'}}>
+          style={{ backgroundImage: `url(${post.Images[4]?.link})`, backgroundSize: 'cover',  width: '200px', height: '200px', display: "block"}}>
         </Link>
       </div>
       

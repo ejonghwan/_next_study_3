@@ -1,6 +1,8 @@
 import React from 'react'
 
-const IdPage = ({ params }) => {
+type Props = { params: { username: string, id: string } }
+
+const IdPage = ({ params }: Props) => {
 
    console.log('id params?', params)
    // 이 라우트 접속 시 실행돼서 res 받게끔

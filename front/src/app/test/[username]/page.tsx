@@ -1,6 +1,8 @@
 import React from 'react'
 
-const UserName = ({ params }) => {
+type Props = { params: { username: string } }
+
+const UserName = ({ params }: Props) => {
 
    console.log('useranme params', params)
 
