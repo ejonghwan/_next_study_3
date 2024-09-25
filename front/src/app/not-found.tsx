@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { NextPage } from 'next';
+import Link from "next/link";
+import {NextPage} from "next";
 
 const NotFound: NextPage = () => {
   return (
@@ -10,4 +10,4 @@ const NotFound: NextPage = () => {
   )
 }
 
-export default NotFound
+export default NotFound;

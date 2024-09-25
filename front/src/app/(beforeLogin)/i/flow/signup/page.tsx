@@ -1,14 +1,7 @@
+import SignupModal from "@/app/(beforeLogin)/_component/SignupModal";
 
-
-import SignupModal from '@/app/(beforeLogin)/_component/SignupModal'
-
-const FlowSignupPage = () => {
-
+export default function Signup() {
   return (
-   <>
-      <SignupModal />
-   </>
+    <SignupModal />
   )
 }
-
-export default FlowSignupPage;

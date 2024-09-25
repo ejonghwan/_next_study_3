@@ -1,34 +1,15 @@
-import React from 'react'
+import {ReactNode} from "react";
+import styles from '@/app/(beforeLogin)/_component/main.module.css';
 
-type Props = { children: React.ReactNode, modal: React.ReactNode,  modal2: React.ReactNode }
-
-const BeforeLoginLayout = ({ children, modal, modal2}: Props) => {
+type Props = { children: ReactNode, modal: ReactNode };
+export default function Layout({ children, modal }: Props) {
   return (
-    <div>
-      
-      <h2>BeforeLogin Layout</h2>
-      <div style={{ border: "1px solid #777" }}>
-         children
-         {children}
-      </div>
-      <br /><br />
-      <div style={{ border: "1px solid #777" }}>
-         modal
-         {modal}
-      </div>
-
-      <br /><br />
-      <div style={{ border: "1px solid #777" }}>
-         modal2
-         {modal2}
-      </div>
-
-      <br /><br />
-      <div style={{ border: "1px solid #777" }}>
-         페레럴 hoho?
-      </div>
+    <div className={styles.container}>
+      {children}
+      {modal}
     </div>
   )
 }
 
-export default BeforeLoginLayout
+// 주소가 localhost:3001일 때는 children->page.tsx, modal->@modal/default.tsx
+// 주소가 localhost:3001/i/flow/login 때는 chldren->i/flow/login/page.tsx, modal->@modal/i/flow/login/page.tsx

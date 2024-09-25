@@ -1,192 +1,36 @@
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Getting Started
 
-1. (name) 은 그룹핑 할 수 있으며 레이아웃을 만들 수 있다
-   - 그룹핑, 페럴레 라우팅, 인터셉팅 라우팅은 폴더 경로를 무시하니 주의   _ () @ 폴더들은 무시
+First, run the development server:
 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-2. layout은 리렌더링이 되지 않고 그 안에 컴포넌트만 리렌더링이 된다 
-   - 레이아웃도 리렌더하고싶으면 tamplate.tsx로 만들면 된다.  둘 중 하나
-   - 템플릿은 페이지를 넘나들떄 기록을 해야된다거나...혹은 구글 애널리틱스 할 떄 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-3. next 에선 a 태그를 쓰면 새로고침하면서 넘어간다 link를 쓰자
+You can start editing the page by modifying `app/default.tsx`. The page auto-updates as you edit the file.
 
-4. 이미지는 png도 import 할 수 있다. 이미지 최적화는 Image 컴포를 쓰자 
- <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Learn More
 
-5. 패럴레 라우트 = children 말고 layout에 다른 라우팅 추가 (라우팅이 변경되어도 뒤에 어떤 페이지를 띄운 상태로 다른 라우팅을 띄우는 방법...)
-기존 모달과는 다른게 모달은 라우팅 주소가 변경되지 않지만 패럴레 라우팅은 라우팅 주소까지 변경됨. 근데 뒤에 페이지는 그대로 남아있음
-@ 주의점은 띄우고 싶은 페이지와 같은 루트에 있어야함. 
+To learn more about Next.js, take a look at the following resources:
 
-@modal/page.tsx <- 띄워지는 라우팅
-page.tsx  -> 뒤에 있는 페이징
-layout.tsx -> props으로 @name을 받으면 됨. { children, modal }  후에 <div>{children} {modal}</div>
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-6. 인터셉팅 라우터 
-인터셉팅 라우터는 기존 경로를 link로 이동할 때 혹은 url로 들어올 때 인터셉팅 하는 것 
-(.)name  => 현재 경로 
-(..)name => 부모 경로 
-다만 _ () @ 디렉토리는 무시
+## Deploy on Vercel
 
-ex) 아래같은 경우 link나 router로 왔을 땐 아래 라우팅이 보여지고 그 자리에서 새로고침 혹은 url직접 치고오면 시 본 페이지가 보여짐
-/i/flow/login/page.tsx
-(.)i/flow/login/page.tsx 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-
-
-
-7. 클라이언트 컴포넌트("use client")도 서버에서 렌더링 됩니다. 헷갈리시면 안 돼요. 그래서 SSR도 됩니다.
-
-
-
-8. 경로가 다 올바른데 에러뜨는 경우는 캐시가 잘못되었을수 있으니 서버재시작
-
-
-
-9. default.tsx => page.tsx와 동일하지만 아무 것도 내뱉지않을 때 사용 (페럴레 라우트가 필요없을 때 사용 or 페럴레 라우트 기본값)
-예전에 nuxt.js 작업할 때 비슷한 오류
-@modal / page.tsx 였는데 
-@modal / i / flow / login / page.tsx 로 변경되었으니 
-@modal 에는 page.tsx가 없어서  localhost:3000/경로에서는  layout에 있는 { modal } prop에서 modal을 찾을 수 없다고 뜬거.
-그래서 @modal에 default.tsx 혹은 page.tsx 넣어줘야함
-
-위에꺼 중요!!
-
-
-
-10. 서버컴포넌트에서 클라이언트 컴포넌트를 임폴트해도 되지만 클라컴포에서는 서버컴포를 임폴트 하면 임폴트된 서버 컴포는 클라컴포로 변경됨.
-(이건 테스트 해봐야할듯? )
-
-
-
-11. privite components => app안에 컴포넌트파일을 만들어 사용할 수 있는듯. 
-페레럴 + 인터셉팅 로그인 모달이 중복되어 하나로 합침 
-
-아래 경로에 있는 jsx를 컴포넌트로 뺴서 가져다씀.. 아래 페이지에서는 컴포넌트 호출만.
-(beforeLogin)/@modal/(.)i/flow/login/page.tsx 
-(beforeLogin)/i/flow/login/page.tsx
-
-
-
-
-12. page는 서버 컴포넌트인게 좋음
-
-
-
-13. 서버에서 동작하는 리다이렉트와 클라이언트에서 동작하는 라우트 구분 잘해야함. 
-## 서버사이드에서 돌아가는 리다이렉트 (클라에선 안먹음)
-import { redirect } from 'next/navigation'
-redirect('/i/flow/login');
-
-## 클라이언트 사이드에서 돌아가는 리다이렉트  (서버에선 안먹음)
-import { useRouter } from 'next/navigation'
-const router = useRouter();
-router.replace('/login')
-
-// ## router.push
-// localhost:3000 => localhost:3000/login => localhost:3000/i/flow/login 
-// - 하나 뒤로 이동. 때문에 2번째에서 어딘가로 보냈다면 계속 무한 반복됨 
-
-// ## router.replace
-// localhost:3000 => localhost:3000/login => localhost:3000/i/flow/login
-// - history 안남김. 때문에 2번째에서 어딘가로 보내도 다시 처음으로 이동. 위 같은 경우는 replace가 맞음
-
-
-
-
-14. dvh 디바이스 검색창 고려한 vh vw 단위.
-
-
-
-15. route구분해서 네비액티브는 server-side에서 안됨
-
-아래 두개의 segment를 받아서 처리
-import { useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation'
-   const segment = useSelectedLayoutSegment();
-   const segments = useSelectedLayoutSegments();
-
-   // segment : layout 기준으로 첫번째 폴더
-   // ex) 아래의 경우 두번째 루트에 들어가도 세그먼트는 test1, test2를 반환
-   // test1/innertest1
-   // test2/innertest2
-   // layout.tsx 
-   
-   // segments : layout 기준으로 모든 폴더  
-    // ex) 아래의 경우 해당 루트에 들어가면 세그먼츠는 test1/inntertest1, test2/innertest2를 모두 반환
-   // test1/innertest1
-   // test2/innertest2
-   // layout.tsx 
-
-
-15-1. route 구분 하는 또 한가지. 
-- localhost:3000/ 여기부터 ? 쿼리스트링 앞까지 모두 반환
-- client side에서만 작동
-
-import { usePathname } from 'next/navigation'
-const pathname = usePathname(); 
-
-특정 컴포넌트 안쪽에 
-if(pathname === '특정라우터명') return null 해주면 아래는 렌더링안함
-
-
-15-2 searchParams 받아오는법 
-  const searchParams = useSearchParams();
- router.replace(`/search?q=${searchParams.get('q')}`)
-   router.replace(`/search?${searchParams.toString()}&f=live`)  -> 지금 있는거 다  쓰고 뒤에 추가
-
-
-
-
-16. jsx에 onClick이 있으면 client 컴포넌트라고 보면 됨 
-- 서버액션이 실험적이라 아직까지는 이벤트 리스너들은 클라이언트 컴포에서 처리
-
-
-
-
-17. svg 복사하는법 
--개발자도구 엘리먼츠탭에서 svg 선택 
-- 우클릭 후 복사 > outerHTML 복사
-
-
-
-18. contextapi 최적화 ? 한번 알아보기
-
-
-
-
-19. 페러렐 라우터 + 인터셉팅 라우터 버그 정리 
-
-
-
-20. 부모는 client side인데 자식은 server side 일 때 children 활용 
-호출하는 페이지는 server-side
-Client 컴포넌트는 "use client"
-<Client prop={prop}>
-   <div>이 파일 자체는 server side </div>
-</Client>
-
-주의) 클라컴포에서 서버 컴포 import하면 서버컴포 성격이 변경됨. 위처럼 사용해야
-
-
-
-
-
-21. 클릭되는 영역과 그 안에 a 태그가 있을 경우 캡쳐링 사용
-<li  onClickCapture={clikcevt}>
-  <a href={}> 
-위의 경우 저 이벤트 사용하면 캡쳐링 방지 
-
-
-
-
-
-22. 이미 import 되고 있는 export const 컴포넌트들 import 경로까지 자동으로 변경해주는 기능 
-해당 코드 우클릭 > Refactor... > move
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

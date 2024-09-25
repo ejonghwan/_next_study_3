@@ -1,6 +1,6 @@
 "use client"
-
-
+import style from './post.module.css';
+import cx from 'classnames';
 
 type Props = {
   white?: boolean
@@ -14,12 +14,10 @@ export default function ActionButtons({ white }: Props) {
   const onClickRepost = () => {}
   const onClickHeart = () => {}
 
-  // console.log('white?', white)
-
   return (
-    <div >
-      <div>
-        <button onClick={onClickComment} style={{ border: (commented ? '1px solid red' : '') }}>
+    <div className={style.actionButtons}>
+      <div className={cx(style.commentButton, { [style.commented]: commented }, white && style.white)}>
+        <button onClick={onClickComment}>
           <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
             <g>
               <path
@@ -27,10 +25,10 @@ export default function ActionButtons({ white }: Props) {
             </g>
           </svg>
         </button>
-        <div>{1 || ''}</div>
+        <div className={style.count}>{1 || ''}</div>
       </div>
-      <div>
-        <button onClick={onClickRepost} style={{ border: (reposted ? '1px solid red' : '') }}>
+      <div className={cx(style.repostButton, reposted && style.reposted, white && style.white)}>
+        <button onClick={onClickRepost}>
           <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
             <g>
               <path
@@ -38,10 +36,10 @@ export default function ActionButtons({ white }: Props) {
             </g>
           </svg>
         </button>
-        <div>{1 || ''}</div>
+        <div className={style.count}>{1 || ''}</div>
       </div>
-      <div>
-        <button onClick={onClickHeart} style={{ border: (liked ? '1px solid red' : '') }}>
+      <div className={cx([style.heartButton, liked && style.liked, white && style.white])}>
+        <button onClick={onClickHeart}>
           <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
             <g>
               <path
@@ -49,7 +47,7 @@ export default function ActionButtons({ white }: Props) {
             </g>
           </svg>
         </button>
-        <div >{0 || ''}</div>
+        <div className={style.count}>{0 || ''}</div>
       </div>
     </div>
   )

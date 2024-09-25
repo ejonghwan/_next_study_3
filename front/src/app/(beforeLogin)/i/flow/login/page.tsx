@@ -1,14 +1,7 @@
-import LoginModal from '@/app/(beforeLogin)/_component/LoginModal'
+import LoginModal from "@/app/(beforeLogin)/_component/LoginModal";
 
-
-const FlowLoginPage = () => {
+export default function Page() {
   return (
-    <div>
-      기존 플로우 로그인 페이지
-      <LoginModal />
-    </div>
-  )
+    <LoginModal />
+  );
 }
-
-export default FlowLoginPage
-
