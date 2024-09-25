@@ -1,34 +1,28 @@
-"use client"
-import React from 'react'
-// import Link from 'next/link'
-import Tab from '@/app/(afterLogin)/_component/Tab'
-import TabProvider from '@/app/(afterLogin)/_component/TabProvider'
-import Post from '@/app/(afterLogin)/_component/Post'
-import PostForm from '@/app/(afterLogin)/_component/PostForm'
+import style from './home.module.css';
+import Tab from "@/app/(afterLogin)/home/_component/Tab";
+import TabProvider from "@/app/(afterLogin)/home/_component/TabProvider";
+import PostForm from "@/app/(afterLogin)/home/_component/PostForm";
+import Post from "@/app/(afterLogin)/_component/Post";
 
-const HomePage = () => {
+export default function Home() {
   return (
-    <div>
+    <main className={style.main}>
       <TabProvider>
+        <Tab/>
         <PostForm />
-        <Tab />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        {/* <Link href="/home/test">페레럴 테스트</Link> */}
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
+        <Post/>
       </TabProvider>
-    </div>
+    </main>
   )
 }
-
-export default HomePage

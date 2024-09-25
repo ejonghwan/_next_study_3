@@ -1,13 +1,14 @@
-// import styles from "./page.module.css";
-import Main from '@/app/(beforeLogin)/_component/Main'
+import Main from "@/app/(beforeLogin)/_component/Main";
+import {auth} from "@/auth";
+import {redirect} from "next/navigation";
 
-
-export default function BeforeLoginPage() {
+export default async function Home() {
+  const session = await auth();
+  if (session?.user) {
+    redirect('/home');
+    return null;
+  }
   return (
-    // <div className={styles.page}>
-      <>
-        <Main />
-      </> 
-    // </div>
-  );
+    <Main />
+  )
 }

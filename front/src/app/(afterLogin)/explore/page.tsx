@@ -1,40 +1,26 @@
-import React from 'react'
-import SearchForm from '../_component/SearchForm'
-import Trand from '../_component/Trand'
+import style from "./explore.module.css";
+import SearchForm from "@/app/(afterLogin)/_component/SearchForm";
+import Trend from "@/app/(afterLogin)/_component/Trend";
 
-const page = () => {
+export default function Home() {
   return (
-    <div>
-      <h2>explore page</h2>
-
-      <div>
+    <main className={style.main}>
+      <div className={style.formZone}>
         <SearchForm />
       </div>
-      <div>
+      <div className={style.trend}>
         <h3>나를 위한 트렌드</h3>
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
-        <Trand />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
       </div>
-      
-    </div>
+    </main>
   )
 }
-
-export default page

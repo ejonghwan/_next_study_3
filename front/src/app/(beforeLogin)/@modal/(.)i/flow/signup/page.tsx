@@ -1,14 +1,10 @@
-import SignupModal from '@/app/(beforeLogin)/_component/SignupModal'
+import SignupModal from "@/app/(beforeLogin)/_component/SignupModal";
 
-
-const SignupModalPage = () => {
-
+export default function Signup() {
   return (
-   <>
-      인터셉팅한 사인업 페이지 
-      <SignupModal />
-   </>
+    <>
+      난 가로채기지롱 ㅋㅋ
+      <SignupModal/>
+    </>
   )
 }
-
-export default SignupModalPage;

@@ -1,15 +1,12 @@
 "use client";
 
-import {useRouter} from "next/navigation";
+import style from './modal.module.css';
 import {useRef, useState} from "react";
 export default function TweetModal() {
-
-  const router = useRouter();
-
   const [content, setContent] = useState();
   const imageRef = useRef<HTMLInputElement>(null);
   const onSubmit = () => {};
-  const onClickClose = () => router.back();
+  const onClickClose = () => {}
   const onClickButton = () => {}
   const onChangeContent = () => {}
 
@@ -19,9 +16,9 @@ export default function TweetModal() {
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={onClickClose}>
+    <div className={style.modalBackground}>
+      <div className={style.modal}>
+        <button className={style.closeButton} onClick={onClickClose}>
           <svg width={24} viewBox="0 0 24 24" aria-hidden="true"
                className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03">
             <g>
@@ -30,26 +27,26 @@ export default function TweetModal() {
             </g>
           </svg>
         </button>
-        <form  onSubmit={onSubmit}>
-          <div >
-            <div >
-              <div >
+        <form className={style.modalForm} onSubmit={onSubmit}>
+          <div className={style.modalBody}>
+            <div className={style.postUserSection}>
+              <div className={style.postUserImage}>
                 <img src={me.image} alt={me.id} />
               </div>
             </div>
-            <div >
-              <textarea  placeholder="무슨 일이 일어나고 있나요?"
+            <div className={style.inputDiv}>
+              <textarea className={style.input} placeholder="무슨 일이 일어나고 있나요?"
                      value={content}
                      onChange={onChangeContent}
               />
             </div>
           </div>
-          <div >
-            <div />
-            <div >
-              <div >
+          <div className={style.modalFooter}>
+            <div className={style.modalDivider}/>
+            <div className={style.footerButtons}>
+              <div className={style.footerButtonLeft}>
                 <input type="file" name="imageFiles" multiple hidden ref={imageRef} />
-                <button type="button" onClick={onClickButton}>
+                <button className={style.uploadButton} type="button" onClick={onClickButton}>
                   <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
                     <g>
                       <path
@@ -58,7 +55,7 @@ export default function TweetModal() {
                   </svg>
                 </button>
               </div>
-              <button type="button" disabled={!content}>게시하기</button>
+              <button className={style.actionButton} disabled={!content}>게시하기</button>
             </div>
           </div>
         </form>

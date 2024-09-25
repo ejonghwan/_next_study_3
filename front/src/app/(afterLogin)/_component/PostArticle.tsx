@@ -1,6 +1,7 @@
 "use client";
 
 import {ReactNode} from "react";
+import style from './post.module.css';
 import {useRouter} from "next/navigation";
 
 type Props = {
@@ -25,9 +26,8 @@ export default function PostArticle({ children, post}: Props) {
   }
 
   return (
-    <article onClickCapture={onClick} >
+    <article onClickCapture={onClick} className={style.post}>
       {children}
     </article>
   );
 }
-
