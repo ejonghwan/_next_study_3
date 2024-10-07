@@ -3,7 +3,10 @@
 import {redirect} from "next/navigation";
 import {signIn} from "@/auth";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (prevState: any, formData: FormData) => {
+
+
   if (!formData.get('id') || !(formData.get('id') as string)?.trim()) {
     return { message: 'no_id' };
   }
@@ -17,6 +20,8 @@ export default async (prevState: any, formData: FormData) => {
     return { message: 'no_image' };
   }
   let shouldRedirect = false;
+
+
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
       method: 'post',
@@ -29,11 +34,13 @@ export default async (prevState: any, formData: FormData) => {
     }
     console.log(await response.json())
     shouldRedirect = true;
+
     await signIn("credentials", {
       username: formData.get('id'),
       password: formData.get('password'),
       redirect: false,
     })
+    
   } catch (err) {
     console.error(err);
     return { message: null };
