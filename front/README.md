@@ -290,3 +290,14 @@ front 요청이 많을 시 front서버만 늘리면 됨.
 
 
 
+33. tanstack query
+
+
+
+34. revalidateTag, revalidatePath 
+revalidateTag : next fetch 보낼 때 태그를 지정해서 해당 태그만 캐시를 삭제 
+revalidatePath : 그 페이지에서 보내는 요청 자체를 모두 캐시 삭제
+
+import { revalidateTag, revalidatePath } from 'next/cache'
+revalidateTag(tagname) /fetch next: { tag: ['posts'] }
+revalidatePath(pathname) /home
