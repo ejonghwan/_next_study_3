@@ -291,6 +291,47 @@ front 요청이 많을 시 front서버만 늘리면 됨.
 
 
 33. tanstack query
+const clientValue = useQuery({ queryKey: ['poosts'], queryFn: getPosts });
+query key가 올때 queryFn을 실행한다는 의미 
+
+왜 redux를 안쓰고 tanstack query 혹은 swr 로 데이터를 관리하냐 ? 
+
+[역할]
+..탄스택쿼리의 핵심은 데이터를 가져오는 것.
+- 데이터를 가져와서 컴포넌트간에 공유도 가능. Query.getClient 
+- 아니면 데이터는 탄스택쿼리, 컴포넌트간의 상태 공유는 redux나 context API, zustand 중 하나와 섞어사용 가능
+
+..리덕스의 핵심은 컴포넌트 간의 상태를 공유 하는 것.
+- 리덕스도 saga를 이용해서 데이터를 가져올 수 있고 관리 및 캐싱이 가능하지만 약함.
+
+
+[캐싱]
+탄스택쿼리는 데이터를 가져와서 캐싱하는 것이 강력한 기능
+어떤 뉴스기사나 블로그 글은 매번 바뀌는 것이 아니기 떄문에 
+일주일에 한번씩 업데이트를 한다거나, 수정액션이 일어났을 때 변경되면 되는 것. 
+때문에 평소엔 데이터 요청을 보내지 않고 캐싱되어있는 곳에서 꺼내 쓰다가 글이 수정되었을 때 
+db와 캐싱되어있는 메모리에 모두 업데이트 시키는 것이 좋은 방법
+
+
+[결론]
+- 탄스택쿼리
+데이터를 가져와서 캐싱하는 강력한 도구.
+컴포넌트 간 데이터 공유도 가능하긴함. 
+비동기에 꼭 필요한 로딩, 성공, 실패가 패키지처럼 표준화함
+query key도 잘 조합해서 한번에 캐싱 및 초기화 할 수 있는 장점
+
+- redux나 context API, zustand 등 
+컴포넌트 간 상태나 데이터 공유 목적
+
+
+[탄스택쿼리상태]
+- Fresh 
+기본적으로 데이터 불러오면 fresh. 신선한 데이터 상태 
+기본적으로 모든 데이터는 fresh 상태가 아님.
+
+
+
+
 
 
 
@@ -301,3 +342,12 @@ revalidatePath : 그 페이지에서 보내는 요청 자체를 모두 캐시 �
 import { revalidateTag, revalidatePath } from 'next/cache'
 revalidateTag(tagname) /fetch next: { tag: ['posts'] }
 revalidatePath(pathname) /home
+
+
+
+
+
+35. modal에 I붙이는건 인터페이스라는 의미 
+import { Post as IPost } from '@/modal/post.ts'
+
+인터페이스는 객체를 타이핑할떄 많이 씀
