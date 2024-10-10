@@ -326,10 +326,69 @@ query key도 잘 조합해서 한번에 캐싱 및 초기화 할 수 있는 장�
 
 [탄스택쿼리상태]
 - Fresh 
-기본적으로 데이터 불러오면 fresh. 신선한 데이터 상태 
-기본적으로 모든 데이터는 fresh 상태가 아님.
+기본적으로 데이터 불러오면 fresh. 캐시된 곳에서 가져와서 사용해도됨. 
+신선한 데이터 상태. 데이터 상태가 언제까지 fresh일지는 개발자가 정함.
+하지만 기본적으로 모든 데이터는 fresh 상태가 아님.
 
 
+- Stale
+데이터를 불러오는 순간부터 스테일. 
+얘는 언제라도 기회가 되면 새로 데이터를 가져와라 이런 뜻
+기회란, 아래 세개의 상태가 기준. 세개 중 만족하는 조건이라면 데이터를 새로 가져옴.
+
+{
+   refetchOnWindowFocus: false, // 브라우저 다른탭 갔다가 다시 해당 사이트탭으로 돌아왔을 때
+   retryOnMout: true, // 컴포넌트가 언마운트 되었다가 마운트 되었을 때
+   refetchOnReconnect: false, // 인터넷 접속이 끊겼다가 다시 접속이 되는 순간
+   retry: false // 데이터를 가져올 때 실패했다면 몇번정도 다시 재시도를 할지 
+}
+
+이 옵션들은 전역으로 설정할 수도, useQuery로 따로 설정할 수도 있음.
+
+
+
+[사용법]
+const { data } = useQuery<IPost[]>({
+   queryKey: ['posts', 'recommentds'],
+   queryFn: getPostRecommentds,
+   staleTime: 60 * 1000, // fresh에서 stale로 변경되는 시간이 5분이라는 뜻. 5분까지는 fresh한 상태. 즉 캐싱된 데이터사용
+   gcTime: 60 * 1000, // 기본 5분
+})
+
+- staleTime
+즉, 5분 동안은 fresh이기 때문에 서버에서 가져오는 게 아니라 메모리에 캐시된 데이터에서 가져온다는 뜻. 
+때문에 매우 빠름.
+
+
+- inactive
+그리고 inactive는 현재 보는 화면에서 해당 데이터를 사용하지 않으면 data는 inactive로 이동 
+예를 들어 home에서 위의 데이터를 불러와서 보다가 다른 페이지로 이동 시 불러온 posts 데이터는 inactive로 이동하게 됨. 
+posts data가 inactive로 이동하여도 다시 home으로 이동 시 캐시된 곳에서 가져옴 (stale이 되면 서버에서 가져옴)
+
+
+- gcTime
+inactive는 gcTime과 같이 봐야하는데, 가비지컬렉터 시간이라는 뜻으로 
+메모리에 캐싱된 데이터들을 언제까지 보관할건지 설정하는 시간
+inactive에 들어가 있는 애들은 설정된 시간 후에 모두 메모리에서도 삭제됨
+
+- 순서
+home에서 posts 데이터를 가져온 후 페이지 이동 시 inactive에 들어가는데 
+그 즉시 해당 posts 데이터는 gcTime 카운팅이 시작됨. 
+
+- 중요. staleTime은 gcTime보다 항상 짧아야함
+예를 들어 staleTime은 5분 gcTime은 3분이라고 했을 때, 5분 동안은 캐싱되어 있는 데이터를 사용하기로 했는데 
+페이지 이동을 해서 해당 데이터가 inactive에 들어가는 순간 gcTime이 카운팅 되기 때문에 3분 후에 메모리에서 제거됨. 
+그럼?? 3분 후 사용자가 다시 home에 와서 staleTime에 2분이 남았으니 캐시에서 데이터를 가져와야 하지만 
+inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되었기 떄문에 가져올 수 없게됨  
+
+
+- fetching 
+데이터를 가져올 때 표시됨. 순간적으로 1되어있는 걸 거의 못봄
+
+
+- paused 
+데이터 가져올 때 잠시 멈출수있는 기능
+오프라인일때, 인터넷 끊겼을 때
 
 
 
