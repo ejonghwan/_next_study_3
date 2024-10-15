@@ -347,12 +347,13 @@ query key도 잘 조합해서 한번에 캐싱 및 초기화 할 수 있는 장�
 
 
 
-[사용법]
+[hook 사용법]
 const { data } = useQuery<IPost[]>({
    queryKey: ['posts', 'recommentds'],
    queryFn: getPostRecommentds,
    staleTime: 60 * 1000, // fresh에서 stale로 변경되는 시간이 5분이라는 뜻. 5분까지는 fresh한 상태. 즉 캐싱된 데이터사용
    gcTime: 60 * 1000, // 기본 5분
+   enabled: !!session?.user // 유저가 있을 때만 useQuery 실행 
 })
 
 - staleTime
@@ -443,6 +444,8 @@ export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, sea
 }
 
 
+// 검색할떄 useQuery stailtime 길게주면 검색 시 캐싱하니 메모리 많이 먹음. 
+// 적당히 주고 캐시타임 적게줘서 리셋
 
 
 
