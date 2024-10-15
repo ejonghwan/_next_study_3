@@ -391,6 +391,18 @@ inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되
 오프라인일때, 인터넷 끊겼을 때
 
 
+- devtools actions
+1. refetch : 데이터 무조건 새로 가져옴
+2. invalidate : 누르면 상단 observer에 사용하고 있는 querykey가 들어감. 
+현재 페이지에서 사용하고 있다면 옵저빙하고 있다가 다시 해당 페이지 왔을 때 캐시되고 있는 곳에서 가져옴. refetch보다 효율적  
+다만 캐시타임이 지나 inactive인 것은 안가져옴
+3. reset : useQuery설정 시 초기 데이터가 있는 경우엔 초기데이터로, 없을 땐 그냥 새로가져옴. initialData: () => []
+4. remove : 쿼리키 제거
+5. loading : 로딩상태일떄 보기
+6. trigger Error : 에러상태일 때 보기
+
+
+
 
 
 
@@ -398,6 +410,9 @@ inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되
 revalidateTag : next fetch 보낼 때 태그를 지정해서 해당 태그만 캐시를 삭제 
 revalidatePath : 그 페이지에서 보내는 요청 자체를 모두 캐시 삭제
 
+참고로 next fetch tag는 서버쪽 캐시이기 떄문에 react-query랑 다름. react-query는 클라이언트쪽에서 캐싱이 강력한 도구
+
+ex)
 import { revalidateTag, revalidatePath } from 'next/cache'
 revalidateTag(tagname) /fetch next: { tag: ['posts'] }
 revalidatePath(pathname) /home
