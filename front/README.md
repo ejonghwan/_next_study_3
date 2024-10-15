@@ -403,6 +403,48 @@ inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되
 
 
 
+type ex)
+import { Post as IPost } from 'model~'
+import { getSearchResult } from 'lib~'
+
+type = { searchParams: { q: string, f?: string, pf?: string } };
+
+const SearchResult = ({ searchResult }: Props) => {
+
+   // 다이나믹한 쿼리키를 받을 땐 4번쨰 자리가 해당 타입
+   const { data } = useQuery<IPost[], Object, IPost[], [_1: string, _2: string, Porps['searchParams']]>({
+       // queryKey짜는 것도 중요. 이렇게 적으면 searchParams 부분은 검색어가 3번쨰 배열로 들어감.
+       // 그리고 queryKey에 적은 배열이 queryFn 인자로 넘어감.
+      queryKey: ["post", "search", searchParams], 
+      queryFn: getSearchResult,
+      staleTime: 60 * 1000,
+      gcTime: 300 * 1000,
+   })
+}
+
+
+// getSearchResult file
+// { queryKey } 인자는 위에 queryFn에 들어간 queryKey
+export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, searchParams: { q: string, pf?: string, f?: string }]>
+ = async ({ queryKey }) => {
+   const [_1, _2, searchParams] = queryKey;
+   const res = await fetch(`url/${searchParams.q}?${searchparams.toString()}`, {
+      next: {
+         tags: ['posts', 'search', searchParams.q]
+      },
+      cache: 'no-store'
+   })
+
+   if(!res.ok) {
+      throw new Error('e')
+   }
+
+   return res.json();
+}
+
+
+
+
 
 
 
