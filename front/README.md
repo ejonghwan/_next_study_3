@@ -403,7 +403,7 @@ inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되
 6. trigger Error : 에러상태일 때 보기
 
 
-```javascript
+```typescript
 type ex)
 import { Post as IPost } from 'model~'
 import { getSearchResult } from 'lib~'
@@ -422,9 +422,10 @@ const SearchResult = ({ searchResult }: Props) => {
       gcTime: 300 * 1000,
    })
 }
+```
 
-
-// getSearchResult file
+getSearchResult file
+```typescript
 // { queryKey } 인자는 위에 queryFn에 들어간 queryKey
 export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, searchParams: { q: string, pf?: string, f?: string }]>
  = async ({ queryKey }) => {
