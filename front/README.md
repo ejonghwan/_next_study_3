@@ -403,7 +403,7 @@ inactive에 들어간 순간 카운팅이 되어 3분 후 데이터가 삭제되
 6. trigger Error : 에러상태일 때 보기
 
 
-
+```javascript
 type ex)
 import { Post as IPost } from 'model~'
 import { getSearchResult } from 'lib~'
@@ -446,7 +446,7 @@ export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, sea
 
 // 검색할떄 useQuery stailtime 길게주면 검색 시 캐싱하니 메모리 많이 먹음. 
 // 적당히 주고 캐시타임 적게줘서 리셋
-
+```
 
 
 
