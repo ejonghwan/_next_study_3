@@ -468,6 +468,77 @@ export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, sea
 ```
 
 
+## 탄스택쿼리 SSR prefetchQuery
+```typescript
+
+// src/app/(afterLogin)/[username]/page.tsx  
+type Props = { { username: string  } }
+const Profile = async ({ params }: Props) => {
+   const { username: string } = params
+   const queryClient = new QueryClient();
+   await queryClient.prefetchQuery({ queryKey: ['users', username], queryFn: getUser })
+   await queryClient.prefetchQuery({ queryKey: ['posts', 'users', username], queryFn: getUserPosts })
+   const dehydratedState = dehydrate(queryClient) 
+
+   return (
+      <main>
+         <HydrationBoundary state={dehydratedState}> 
+            ...userInfo
+            ...
+            <div>
+               <UserPosts username={username} />
+            </div>
+         </HydrationBoundary>
+      </main>
+   )
+}
+```
+
+```typescript
+// userPosts.tsx components
+type Props = { username: string  }
+const UserPosts = async ({ username }: Props) => {
+   
+   const { data } = useQuery<IPost[], Object, IPost[], [_1: string, _2: string, _3: string]>({
+      queryKey: ['posts', 'users', username],
+      queryFn: getUserPosts,
+      staleTime: 60 * 1000, // 5분
+      gcTime: 300 * 1000
+   })
+
+   return (
+      data?.map((post) => <Post key={post.postId} post={post} />)
+   )
+}
+```
+
+```typescript
+// getUserPosts.ts file
+
+import { QueryFunction } from "@tanstack/query-core"
+import { Post } from '@model/Post'
+
+export const getUserPosts: QueryFunction<Post[], [_1: string, _2: string, string]> = async ({ queryKey }) => {
+   
+   const [ _1, _2, username ] = queryKey; 
+   const res = await fetch(`http://localhost:9090/api/users/${username}/posts`, {
+      next: {
+         tags: ['posts', 'users', username]
+      },
+      cache: 'no-store'
+   })
+
+   if(!res.ok) {
+      throw new Error('failed to fetch data')
+   }
+
+   return res.json();
+
+}
+
+```
+
+
 
 ## fetch 옵션 캐싱기능. fetch 캐싱은 서버쪽임
 34. revalidateTag, revalidatePath 
@@ -489,3 +560,8 @@ revalidatePath(pathname) /home
 import { Post as IPost } from '@/modal/post.ts'
 
 인터페이스는 객체를 타이핑할떄 많이 씀
+
+
+
+## 타입 스크립트에서 객체 표현하는 방법
+- Object는 모든 값. 객체를 표현하려면 object 소문자로 적어야함 
