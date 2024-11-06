@@ -162,6 +162,10 @@ if(pathname === '특정라우터명') return null 해주면 아래는 렌더링�
    router.replace(`/search?${searchParams.toString()}&f=live`)  -> 지금 있는거 다  쓰고 뒤에 추가
 
 
+추가 팁.
+ 
+
+
 
 ## client 
 16. jsx에 onClick이 있으면 client 컴포넌트라고 보면 됨 
@@ -366,12 +370,16 @@ query key도 잘 조합해서 한번에 캐싱 및 초기화 할 수 있는 장�
 
 
 [hook 사용법]
+const queryClient = useQueryClient();
+const post = queryClient.getQueryData(['posts', id]);
+
 const { data } = useQuery<IPost[]>({
    queryKey: ['posts', 'recommentds'],
    queryFn: getPostRecommentds,
    staleTime: 60 * 1000, // fresh에서 stale로 변경되는 시간이 5분이라는 뜻. 5분까지는 fresh한 상태. 즉 캐싱된 데이터사용
    gcTime: 60 * 1000, // 기본 5분
    enabled: !!session?.user // 유저가 있을 때만 useQuery 실행 
+   enabled: !!post // 만약 post를 getQueryData로 호출했다면 이렇게 써도 가능. post 데이터가 없을 시 실행안함
 })
 
 - staleTime
@@ -469,6 +477,11 @@ export const getSearchResult: QueryFunction<Post[], [_1: string, _2: string, sea
 
 
 ## 탄스택쿼리 SSR prefetchQuery
+- 서버에서 탄스택쿼리 데이터 먼저 불러오기 위해 사용 
+1: page 서버컴포넌트에서 탄스택쿼리 데이터 미리 불러옴  (HydrationBoundary으로 감싸줌 + dehydratedState)
+2: 컴포에서 useQuery로  데이터 호출 
+3: queryFn으로 호출
+
 ```typescript
 
 // src/app/(afterLogin)/[username]/page.tsx  
