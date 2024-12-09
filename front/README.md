@@ -551,6 +551,64 @@ export const getUserPosts: QueryFunction<Post[], [_1: string, _2: string, string
 
 ```
 
+## 무한스크롤 react-query (SSR)
+```typescript
+
+
+// home.txs
+const Home = async () => {
+   const queryClient = new QueryClient();
+   const queryClient.prefetchInfiniteQuery({
+      queryKey: ['posts', 'recommends'],
+      queryFn: getPostRecommends,
+      initialPageParam:0 // 
+   })
+}
+
+// 사용하는 컴포넌트 
+const PostRecommends = () => {
+   // 4번째 타입은 queryKey임. 5번쨰는 pageParam 자리
+   const {} = useInfiniteQuery<IPost[], Object, InfiniteData<IPost[]>, [_1: string, _2: string], number>({
+      queryKey: ['posts', 'recommends'],
+      queryFn: getPostRecommends,
+      initialPageParam: 0, //처음 
+      getNextPageParam: (lastPAge) => lastPage.at(-1)?.postId// 마지막인데 그냥 숫자를 적으면 안되는 이유는 중간에 삭제할수도 있기 떄문.
+      // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13, 14, 15]] 실제로 이렇게 2차원 배열로 관리함.
+      // 위에서 5 10 15 마지막숫자가 lastPage.at(-1)이 됨  
+      staleTime: 60 * 1000 // 5분
+      gcTime: 300 * 1000
+   }) 
+
+   // 2차원 배열이라 아래 소스도 2차원 배열로 돌려줘야함 
+   // return data?.map((post) => (
+   //    <Post key={post.postId} post={post} />
+   // ))
+
+   return data?.pages.map((page, idx) => (
+      <Fragment key={idx}>
+         page.map((post) => <Post key={post.postId} post={post} />)
+      </Fragment>
+   ))
+}
+
+
+// api 요청하는 곳 
+const getPostRecommends = ({ pageParam }: Props) => { //react-query에서 queryFn으로 넘기면 여기 들어와있음
+   const res = await fetch(`http~/api/postRecommends?cursor=${pageParam}`, {
+      next: {
+         tags: ['posts', 'recommends'],
+      },
+      cache: 'no-store'
+   })
+   
+   if(!res.ok) {
+      throw new Error('failed to fetch data')
+   }
+
+   return res.json();
+}
+
+```
 
 
 ## fetch 옵션 캐싱기능. fetch 캐싱은 서버쪽임
@@ -584,9 +642,6 @@ import { Post as IPost } from '@/modal/post.ts'
 
 
 ## test 
-
-readme
-디디
 
 1) .env 파일 : 모든 환경에서 공통적으로 적용할 디폴트 환경변수를 정의한다. 가장 우선순위가 낮다.
 2) .env.development 파일: 개발 환경(process.env.NODE_ENV === 'development') 에서 적용된다.
@@ -702,3 +757,10 @@ export default nextConfig;
     원본 이미지가 600px이라면, 1080사이즈, 1200사이즈로 요청하더라도 원본 이미지가 내려오게 됨
 */
 ```
+
+
+
+
+
+
+
