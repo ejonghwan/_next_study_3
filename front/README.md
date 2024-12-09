@@ -568,7 +568,12 @@ const Home = async () => {
 // 사용하는 컴포넌트 
 const PostRecommends = () => {
    // 4번째 타입은 queryKey임. 5번쨰는 pageParam 자리
-   const {} = useInfiniteQuery<IPost[], Object, InfiniteData<IPost[]>, [_1: string, _2: string], number>({
+   const { 
+      data, 
+      fetchNextPage, // 다음페이지 가져오라는 명령 함수  
+      hasNextPage, // 다음 페이지의 존재 유무 1,2,3,4,5  6,7,8,9  면 4개만 왔기 떄문에 다음페이지 없다고 인식
+      isFetching // 데이터 불러오는 동안
+      } = useInfiniteQuery<IPost[], Object, InfiniteData<IPost[]>, [_1: string, _2: string], number>({
       queryKey: ['posts', 'recommends'],
       queryFn: getPostRecommends,
       initialPageParam: 0, //처음 
@@ -583,6 +588,8 @@ const PostRecommends = () => {
    // return data?.map((post) => (
    //    <Post key={post.postId} post={post} />
    // ))
+
+
 
    return data?.pages.map((page, idx) => (
       <Fragment key={idx}>
@@ -607,6 +614,42 @@ const getPostRecommends = ({ pageParam }: Props) => { //react-query에서 queryF
 
    return res.json();
 }
+
+
+
+// intersection observer 사용하기
+// npm i react-intersection-observer 모듈 사용 
+
+import { useInView } from 'react-intersection-observer'
+
+const {data, fetchNextPage, hasNextPage, isFetching} = useInfiniteQuery() ...생략
+
+const { ref, inView } = useInView({
+   threshold: 0, // ref 타겟이 보이고 몇px 이후에 호출할건지 
+   delay: 0, // 타겟이 보이고 몇초 후에 될건지. 그리고 0이면 두번씩 호출되는데 조금 주는게 좋을듯 
+})
+
+useEffect(() => {
+   if(inView) {
+      !isFetching && hasNextPage && fetchNextPage();  
+      // hasNextPage 다음페이지가 존재할 때 가져옴
+      // isFetching은 데이터 가져오는 동안 똑같은거 가져오지말라고 
+   } 
+}, [inView, hasNextPage, fetchNextPage, isFetching])
+
+// inview가 처음엔 false였다가 타겟이 보이면 true가 됨
+
+return (
+   <>
+      data?.pages.map((page, idx) => (
+         <Fragment key={idx}>
+            page.map((post) => <Post key={post.postId} post={post} />)
+         </Fragment>
+      ))
+      <div ref={ref} style={{ height: '50px' }}></div> // 얘한테 도달하면 이벤트 발생
+   </>
+)
+
 
 ```
 
