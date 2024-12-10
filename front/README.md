@@ -573,6 +573,8 @@ const PostRecommends = () => {
       fetchNextPage, // 다음페이지 가져오라는 명령 함수  
       hasNextPage, // 다음 페이지의 존재 유무 1,2,3,4,5  6,7,8,9  면 4개만 왔기 떄문에 다음페이지 없다고 인식
       isFetching // 데이터 불러오는 동안
+      isPending, // 데이터 요청 전, 완전 초기상태
+      isLoading // 로딩상태
       } = useInfiniteQuery<IPost[], Object, InfiniteData<IPost[]>, [_1: string, _2: string], number>({
       queryKey: ['posts', 'recommends'],
       queryFn: getPostRecommends,
@@ -809,4 +811,102 @@ export default nextConfig;
 
 
 
+## error.tsx / loading.tsx 
+리액트의 Suspense와 ErrorBoundery를 이용해서 라우터 단위에서 처리해줌.
+서버컴포넌트에서 프리패치된 내용들은 로딩이 뜨지 않고 라우터 이동 시 로딩창 뜸 
+app 
+ home 
+  error.tsx
+  loading.tsx 
+  page.tsx 
 
+위 경로로 작성. 
+하지만 한 페이지 안에서 각각의 컴포넌트에 로딩창을 띄우려면 react-query isLoading등을 이용해서 로딩 띄워야함 
+ 
+loading.tsx가 발동되는 되는 조건 (서스펜스가 작동되는 조건)
+1. 데이타 패칭 후 
+2. 코드 스플리팅 등으로 react lazy가 적용된 경우  
+3. use() 훅으로 값을 가져오는 경우  
+const value = use(resource) //이 안에 Promise 넣음
+use는 독특하게 훅이나 컴포넌트 안에 있어야하지만 if문 안에서 사용 가능
+if() { 
+   // useContext(userContext)
+   use(userContext) 
+} 
+
+
+
+!! 중요 
+react-query에서 프리패치쿼리쓰면 검색엔진에 긁히지만 처음엔 로딩창은 안보임. 
+그리고 프리패치쿼리를 안쓰면 로딩창은 보이지만 검색엔진엔 안긁힘. 로딩창을 긁어가기떄문. (SEO하고싶으면 메타데이터에 넣으면 됨)
+
+서스펜스를 nextjs에선 거의 쓰진 않지만 쓰게 되는 경우가 있는데 그 경우는 
+빨리 불러와야 하는 부분(SSR)과 로딩이 필요한 부분을 나누는 경우 
+
+ex) 아래와 같이 화면에서 SSR로 불러오더라도 서스펜스를 감싼부분은 다른 부분들을 막지 않고 로딩됨 
+주의1. 서스펜스 안에 들어가는 컴포넌트는 서버 컴포넌트여야함. 
+주의2. layout.tsx 부분은 먼저 전송됨. 레이아웃 외에 부분을 분리 
+<>
+   <Compo1 /> //빨리 불러와야하는 부분
+   <Suspense fallback={<Loading />}>
+      <Compo2 /> 로딩이 생기는 컴포넌트
+   </Suspense>
+</>
+
+```typescript 
+// page.tsx  SSR
+// 서스펜스는 상위에 있어야함 
+<Compo1 /> //먼저 렌더링 되어야하는 부분 
+<Compo2 />
+<Suspence fallback={<Loading />}>
+   <TabDeciderSuspence /> //로딩이 필요한 부분
+</Suspence>
+
+
+// TabDeciderSuspence.tsx  SSR
+const queryCLient = new QueryClient();
+await queryClient.prefetchInfiniteQuery({
+   queryKey: ['posts', 'recommends'],
+   queryFn: getPostRecommends,
+   initialPageParam: 0,
+})
+const dehydratedState = dehydrate(queryClient);
+return (
+   <HydrationBoundary state={dehydratedState}>
+      <TabDecider />
+   </HydrationBoundary>
+)
+
+```
+
+
+
+ex) 넥스트가 그려지는 단계 
+만약 서버컴포넌트에서 로딩을 넣으면 A 구간에서 딜레이가 생기기 떄문에 다른 부분도 늦게 그려짐. 
+loading.tsx가 이런식으로 작동되기 떄문. 
+
+|    A (prefetch)    |       B (TTFB)     |       C (FCP)      |     D TTI    |
+
+A : fetching data on server 
+B : rendering HTML on server 
+C : Loading code on the client 
+D : Hydrating
+
+TTFB : Time To First Byte
+FCP : First Contentful Paint
+TTI : Time Ti Interactive
+
+
+
+
+
+!! 총정리 
+loading이 걸리는 3가지 경우 
+1. page.tsx 자체에서 로딩이 걸리는 경우 => loading.tsx 
+2. ssr에서 로딩이 걸리는 경우 => suspense 
+3. client에서 로딩이 걸리는 경우 react-query에서 isPending
+
+3번에서 react-query도 서스펜스의 로딩을 사용할 수 있음. 
+if(isPending) { <Loading /> } 이건 지우고 useSuspenceQuery() 사용하면 됨  (+ useSuspenceInfiniteQuery())
+
+page.tsx에 서스펜스로 감싼게 있다면 그 안에 있는 컴포넌트에서 useSuspenceQuery이걸 사용 시에 서스펜스를 인식함!!!!
