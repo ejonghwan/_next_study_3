@@ -968,3 +968,7 @@ loading이 걸리는 3가지 경우
 if(isPending) { <Loading /> } 이건 지우고 useSuspenceQuery() 사용하면 됨  (+ useSuspenceInfiniteQuery())
 
 page.tsx에 서스펜스로 감싼게 있다면 그 안에 있는 컴포넌트에서 useSuspenceQuery이걸 사용 시에 서스펜스를 인식함!!!!
+
+
+
+2024년 한해도 너무 고생했다!!! 이어서 계속 공부하자 
